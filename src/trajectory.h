@@ -52,18 +52,8 @@ trajectory_control( const double dT,
     now_v[1]   = now_vel.y( );
     now_v[2]   = now_vel.z( );
     // your code // please use coefficients from matlab to get desired states
-    desired_p[0] = des_pos[int(dT / dt)].x();
-    desired_p[1] = des_pos[int(dT / dt)].y();
-    desired_p[2] = des_pos[int(dT / dt)].z();
-
-    desired_v[0] = des_vel[int(dT / dt)].x();
-    desired_v[1] = des_vel[int(dT / dt)].y();
-    desired_v[2] = des_vel[int(dT / dt)].z();
-
-    desired_a[0] = des_acc[int(dT / dt)].x();
-    desired_a[1] = des_acc[int(dT / dt)].y();
-    desired_a[2] = des_acc[int(dT / dt)].z();
-    printf( "x = %.2f, y = %.2f, z = %.2f\n", desired_p[0], desired_p[1], desired_p[2] );
+    
+    
 
     /*---------------------------------------------------------------------------------*/
     /*--- YOUR CODE FROM HERE --- YOUR CODE FROM HERE --- YOUR CODE FROM HERE ---------*/
@@ -84,6 +74,19 @@ trajectory_control( const double dT,
     if ( dT < max_run_time )
     {
         // output trajectory
+        desired_p[0] = des_pos[int(dT / dt)].x();
+        desired_p[1] = des_pos[int(dT / dt)].y();
+        desired_p[2] = des_pos[int(dT / dt)].z();
+
+        desired_v[0] = des_vel[int(dT / dt)].x();
+        desired_v[1] = des_vel[int(dT / dt)].y();
+        desired_v[2] = des_vel[int(dT / dt)].z();
+
+        desired_a[0] = des_acc[int(dT / dt)].x();
+        desired_a[1] = des_acc[int(dT / dt)].y();
+        desired_a[2] = des_acc[int(dT / dt)].z();
+        printf( "x = %.2f, y = %.2f, z = %.2f\n", desired_p[0], desired_p[1], desired_p[2] );
+
         desired_pos.x( ) = desired_p[0];
         desired_pos.y( ) = desired_p[1];
         desired_pos.z( ) = desired_p[2];

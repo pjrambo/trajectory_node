@@ -77,16 +77,15 @@ trigger_callback( const geometry_msgs::PoseStamped::ConstPtr& trigger_msg )
     if ( is_init )
     {
         std::cout << "[#INFO] get traj trigger info." << std::endl;
-        time_start = time_now;
         pos_start  = w_R_odom * pos_now + w_t_odom;
-
-        // replace start_pos with pos_start
-        Eigen::Vector3d start_pos = Eigen::Vector3d(0,0,0);
         if(generate_trajectory(pos_start, max_time))
+        {
+            time_start = time_now;
             trajectory_draw( time_now );
+        }      
         traj_id    = trigger_msg->header.seq + 1;
         is_traj    = true;
-        
+        time_start = time_now;
     }
 }
 

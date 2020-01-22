@@ -1,7 +1,7 @@
 <launch>
     <node pkg="trajectory_node" type="trajectory_node" name="trajectory_node" output="screen" launch-prefix="">
         <!-- <param name="log_level" type="string" value="info"/> -->
-        <remap from="~odom" to="/vins_estimator/odometry"/>
+        <remap from="~odom" to="/vins_estimator/imu_propagate"/>
         <remap from="~traj_start_trigger" to="/traj_exec_trigger"/>
         <remap from="~des_path" to="/des_path"/>
         <remap from="~position_cmd" to="/position_cmd"/>
@@ -12,15 +12,15 @@
 
 
         <!-- 5 for REPEAT_MODE   &    6 for MAPPING_MODE    &   7 for DEMO_MODE -->
-        <param name="time_line" value="3.0" type="double"/>  
+        <param name="time_line" value="3.5" type="double"/>  
         <param name="time_circle" value="4.0" type="double"/>
         <!-- time_duration is the time between different way point -->
         <param name="time_duration" value="0.5" type="double"/>
         <param name="radius" value="1.5" type="double"/>
 
-        <param name="target_x" value="3" type="double"/>
-        <param name="target_y" value="2" type="double"/>
-        <param name="target_z" value="1" type="double"/>
+        <param name="target_x" value="4.8" type="double"/>
+        <param name="target_y" value="-0.3" type="double"/>
+        <param name="target_z" value="1.5" type="double"/>
 
 
 
