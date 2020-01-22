@@ -17,7 +17,8 @@
         <!-- time_duration is the time between different way point -->
         <param name="time_duration" value="0.5" type="double"/>
         <param name="radius" value="1.5" type="double"/>
-
+        <param name="omega_speed" value="1.0" type="double"/>
+        
         <param name="target_x" value="4.8" type="double"/>
         <param name="target_y" value="-0.3" type="double"/>
         <param name="target_z" value="1.5" type="double"/>

@@ -12,6 +12,7 @@ using namespace std;
 
 double t_l, t_c, t_d;
 double radius;
+double omega;    // omega is a percentage that controls the percentage of a half circle
 double dt = 0.01;
 Eigen::Vector3d target_point;
 Eigen::Vector3d target_point_vio;
@@ -86,7 +87,7 @@ trajectory_control( const double dT,
         desired_a[0] = des_acc[int(dT / dt)].x();
         desired_a[1] = des_acc[int(dT / dt)].y();
         desired_a[2] = des_acc[int(dT / dt)].z();
-        printf( "x = %.2f, y = %.2f, z = %.2f\n", desired_p[0], desired_p[1], desired_p[2] );
+        // printf( "x = %.2f, y = %.2f, z = %.2f\n", desired_p[0], desired_p[1], desired_p[2] );
 
         desired_pos.x( ) = desired_p[0];
         desired_pos.y( ) = desired_p[1];
@@ -170,18 +171,18 @@ bool generate_trajectory(Eigen::Vector3d start_pose, double total_time)
         else if (i * dt <= t_l + t_d + 0.5 * t_c)
         {
             double t = i * dt - t_l - t_d;
-            tmp_p_x = target_point.x() - radius * cos(PI/t_c * t);
-            tmp_p_y = target_point.y() + radius * sin(PI/t_c * t);
+            tmp_p_x = target_point.x() - radius * cos(omega * PI/t_c * t);
+            tmp_p_y = target_point.y() + radius * sin(omega * PI/t_c * t);
             tmp_p_z = target_point.z();
             des_pos.push_back(Eigen::Vector3d(tmp_p_x, tmp_p_y, tmp_p_z));
 
-            tmp_v[0] = PI/t_c * radius * sin(PI/t_c * t);
-            tmp_v[1] = PI/t_c * radius * cos(PI/t_c * t);
+            tmp_v[0] = omega * PI/t_c * radius * sin(omega * PI/t_c * t);
+            tmp_v[1] = omega * PI/t_c * radius * cos(omega * PI/t_c * t);
             tmp_v[2] = 0;
             des_vel.push_back(Eigen::Vector3d(tmp_v[0], tmp_v[1], tmp_v[2]));
 
-            tmp_a[0] = (PI/t_c) * (PI/t_c) * radius * cos(PI/t_c * t);
-            tmp_a[1] = -(PI/t_c) * (PI/t_c) * radius * sin(PI/t_c * t);
+            tmp_a[0] = omega * omega * (PI/t_c) * (PI/t_c) * radius * cos(omega * PI/t_c * t);
+            tmp_a[1] = -omega * omega * (PI/t_c) * (PI/t_c) * radius * sin(omega * PI/t_c * t);
             tmp_a[2] = 0;
             des_acc.push_back(Eigen::Vector3d(tmp_a[0], tmp_a[1], tmp_a[2]));
         }
@@ -204,18 +205,18 @@ bool generate_trajectory(Eigen::Vector3d start_pose, double total_time)
         else if (i * dt <= t_l + 2 * t_d + 1.5 * t_c)
         {
             double t = i * dt - t_l - 2 * t_d - 0.5 * t_c;
-            tmp_p_x = target_point.x() - radius * sin(PI/t_c * t);
-            tmp_p_y = target_point.y() + radius * cos(PI/t_c * t);
+            tmp_p_x = target_point.x() - radius * sin(omega * PI/t_c * t);
+            tmp_p_y = target_point.y() + radius * cos(omega * PI/t_c * t);
             tmp_p_z = target_point.z();
             des_pos.push_back(Eigen::Vector3d(tmp_p_x, tmp_p_y, tmp_p_z));
 
-            tmp_v[0] = -PI/t_c * radius * cos(PI/t_c * t);
-            tmp_v[1] = -PI/t_c * radius * sin(PI/t_c * t);
+            tmp_v[0] = -omega * PI/t_c * radius * cos(omega * PI/t_c * t);
+            tmp_v[1] = -omega * PI/t_c * radius * sin(omega * PI/t_c * t);
             tmp_v[2] = 0;
             des_vel.push_back(Eigen::Vector3d(tmp_v[0], tmp_v[1], tmp_v[2]));
 
-            tmp_a[0] = (PI/t_c) * (PI/t_c) * radius * sin(PI/t_c * t);
-            tmp_a[1] = -(PI/t_c) * (PI/t_c) * radius * cos(PI/t_c * t);
+            tmp_a[0] = omega * omega * (PI/t_c) * (PI/t_c) * radius * sin(omega * PI/t_c * t);
+            tmp_a[1] = -omega * omega * (PI/t_c) * (PI/t_c) * radius * cos(omega * PI/t_c * t);
             tmp_a[2] = 0;
             des_acc.push_back(Eigen::Vector3d(tmp_a[0], tmp_a[1], tmp_a[2]));
         }
@@ -238,18 +239,18 @@ bool generate_trajectory(Eigen::Vector3d start_pose, double total_time)
         else if (i * dt <= t_l + 3 * t_d + 2.5 * t_c)
         {
             double t = i * dt - t_l - 3 * t_d - 1.5 * t_c;
-            tmp_p_x = target_point.x() - radius * sin(PI/t_c * t);
-            tmp_p_y = target_point.y() - radius * cos(PI/t_c * t);
+            tmp_p_x = target_point.x() - radius * sin(omega * PI/t_c * t);
+            tmp_p_y = target_point.y() - radius * cos(omega * PI/t_c * t);
             tmp_p_z = target_point.z();
             des_pos.push_back(Eigen::Vector3d(tmp_p_x, tmp_p_y, tmp_p_z));
 
-            tmp_v[0] = -PI/t_c * radius * cos(PI/t_c * t);
-            tmp_v[1] = PI/t_c * radius * sin(PI/t_c * t);
+            tmp_v[0] = -omega * PI/t_c * radius * cos(omega * PI/t_c * t);
+            tmp_v[1] = omega * PI/t_c * radius * sin(omega * PI/t_c * t);
             tmp_v[2] = 0;
             des_vel.push_back(Eigen::Vector3d(tmp_v[0], tmp_v[1], tmp_v[2]));
 
-            tmp_a[0] = (PI/t_c) * (PI/t_c) * radius * sin(PI/t_c * t);
-            tmp_a[1] = (PI/t_c) * (PI/t_c) * radius * cos(PI/t_c * t);
+            tmp_a[0] = omega * omega * (PI/t_c) * (PI/t_c) * radius * sin(omega * PI/t_c * t);
+            tmp_a[1] = omega * omega * (PI/t_c) * (PI/t_c) * radius * cos(omega * PI/t_c * t);
             tmp_a[2] = 0;
             des_acc.push_back(Eigen::Vector3d(tmp_a[0], tmp_a[1], tmp_a[2]));
         }
@@ -272,18 +273,18 @@ bool generate_trajectory(Eigen::Vector3d start_pose, double total_time)
         else if (i * dt <= t_l + 4 * t_d + 3.5 * t_c)
         {
             double t = i * dt - t_l - 4 * t_d - 2.5 * t_c;
-            tmp_p_x = target_point.x() - radius * sin(PI/t_c * t);
-            tmp_p_y = target_point.y() + radius * cos(PI/t_c * t);
+            tmp_p_x = target_point.x() - radius * sin(omega * PI/t_c * t);
+            tmp_p_y = target_point.y() + radius * cos(omega * PI/t_c * t);
             tmp_p_z = target_point.z();
             des_pos.push_back(Eigen::Vector3d(tmp_p_x, tmp_p_y, tmp_p_z));
 
-            tmp_v[0] = -PI/t_c * radius * cos(PI/t_c * t);
-            tmp_v[1] = -PI/t_c * radius * sin(PI/t_c * t);
+            tmp_v[0] = -omega * PI/t_c * radius * cos(omega * PI/t_c * t);
+            tmp_v[1] = -omega * PI/t_c * radius * sin(omega * PI/t_c * t);
             tmp_v[2] = 0;
             des_vel.push_back(Eigen::Vector3d(tmp_v[0], tmp_v[1], tmp_v[2]));
 
-            tmp_a[0] = (PI/t_c) * (PI/t_c) * radius * sin(PI/t_c * t);
-            tmp_a[1] = -(PI/t_c) * (PI/t_c) * radius * cos(PI/t_c * t);
+            tmp_a[0] = omega * omega * (PI/t_c) * (PI/t_c) * radius * sin(omega * PI/t_c * t);
+            tmp_a[1] = -omega * omega * (PI/t_c) * (PI/t_c) * radius * cos(omega * PI/t_c * t);
             tmp_a[2] = 0;
             des_acc.push_back(Eigen::Vector3d(tmp_a[0], tmp_a[1], tmp_a[2]));
         }
@@ -306,18 +307,18 @@ bool generate_trajectory(Eigen::Vector3d start_pose, double total_time)
         else if (i * dt <= t_l + 5 * t_d + 4 * t_c)
         {
             double t = i * dt - t_l - 5 * t_d - 3.5 * t_c;
-            tmp_p_x = target_point.x() - radius * sin(PI/t_c * t);
-            tmp_p_y = target_point.y() - radius * cos(PI/t_c * t);
+            tmp_p_x = target_point.x() - radius * sin(omega * PI/t_c * t);
+            tmp_p_y = target_point.y() - radius * cos(omega * PI/t_c * t);
             tmp_p_z = target_point.z();
             des_pos.push_back(Eigen::Vector3d(tmp_p_x, tmp_p_y, tmp_p_z));
 
-            tmp_v[0] = -PI/t_c * radius * cos(PI/t_c * t);
-            tmp_v[1] = PI/t_c * radius * sin(PI/t_c * t);
+            tmp_v[0] = -omega * PI/t_c * radius * cos(omega * PI/t_c * t);
+            tmp_v[1] = omega * PI/t_c * radius * sin(omega * PI/t_c * t);
             tmp_v[2] = 0;
             des_vel.push_back(Eigen::Vector3d(tmp_v[0], tmp_v[1], tmp_v[2]));
 
-            tmp_a[0] = (PI/t_c) * (PI/t_c) * radius * sin(PI/t_c * t);
-            tmp_a[1] = (PI/t_c) * (PI/t_c) * radius * cos(PI/t_c * t);
+            tmp_a[0] = omega * omega * (PI/t_c) * (PI/t_c) * radius * sin(omega * PI/t_c * t);
+            tmp_a[1] = omega * omega * (PI/t_c) * (PI/t_c) * radius * cos(omega * PI/t_c * t);
             tmp_a[2] = 0;
             des_acc.push_back(Eigen::Vector3d(tmp_a[0], tmp_a[1], tmp_a[2]));
         }

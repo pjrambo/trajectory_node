@@ -176,6 +176,7 @@ main( int argc, char** argv )
     n.param("time_circle", t_c, 0.0);
     n.param("time_duration", t_d, 0.0);
     n.param("radius", radius, 0.0);
+    n.param("omega_speed", omega, 1.0);
 
     n.param("target_x", target_point.x(), 0.0);
     n.param("target_y", target_point.y(), 0.0);
