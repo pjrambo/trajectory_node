@@ -1,0 +1,2 @@
+gui_command: std_msgs::Int16 msg,  value = 25, in statedefine.h file, the corresponding variable is CAPTURE_BEGIN.
+
