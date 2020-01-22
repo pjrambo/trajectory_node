@@ -1,7 +1,8 @@
 #ifndef TRAJECTORY_H
 #define TRAJECTORY_H
 
-#include <Eigen/Eigen>
+// #include <Eigen/Eigen>
+#include <eigen3/Eigen/Dense>
 #include <stdio.h>
 #include <math.h>
 
